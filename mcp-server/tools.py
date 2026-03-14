@@ -521,7 +521,7 @@ async def trend_research(
                 question = f"What are the key points and latest developments about: {topic}?"
                 try:
                     answer = await client.chat.ask(nb.id, question=question)
-                    text = answer.text
+                    text = answer.answer
                 except Exception as exc:
                     text = f"(research failed: {exc})"
 

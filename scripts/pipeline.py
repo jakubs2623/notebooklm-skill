@@ -683,7 +683,7 @@ def workflow_generate_all(args) -> None:
     GENERATE_METHODS = {
         "audio": "generate_audio",
         "video": "generate_video",
-        "slides": "generate_slides",
+        "slides": "generate_slide_deck",
         "report": "generate_report",
         "quiz": "generate_quiz",
         "flashcards": "generate_flashcards",
@@ -696,7 +696,7 @@ def workflow_generate_all(args) -> None:
     DOWNLOAD_METHODS = {
         "audio": "download_audio",
         "video": "download_video",
-        "slides": "download_slides",
+        "slides": "download_slide_deck",
         "report": "download_report",
         "quiz": "download_quiz",
         "flashcards": "download_flashcards",
