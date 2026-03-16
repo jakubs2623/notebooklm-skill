@@ -14,15 +14,22 @@ notebooklm-skill 的完整安裝說明。
 
 ## 1. 安裝
 
-### 快速安裝（推薦）
+### 方法 A：uvx（推薦 — 零安裝）
 
 ```bash
-git clone https://github.com/claude-world/notebooklm-skill.git
-cd notebooklm-skill
-./install.sh    # pip install + Playwright + Claude Code Skill symlink
+uvx notebooklm-skill --help                    # 直接執行 CLI
+uvx --from notebooklm-skill notebooklm-mcp     # 啟動 MCP Server
 ```
 
-### 手動安裝
+不需要 clone、不需要安裝 — `uvx` 自動從 [PyPI](https://pypi.org/project/notebooklm-skill/) 下載並執行。
+
+### 方法 B：pip install（從 PyPI）
+
+```bash
+pip install notebooklm-skill
+```
+
+### 方法 C：從原始碼安裝
 
 ```bash
 git clone https://github.com/claude-world/notebooklm-skill.git
@@ -30,7 +37,15 @@ cd notebooklm-skill
 pip install .                     # 或：pip install -r requirements.txt
 ```
 
-`pip install .` 後，三個全域命令可用：
+### 方法 D：一鍵安裝（pip + Playwright + Claude Code Skill）
+
+```bash
+git clone https://github.com/claude-world/notebooklm-skill.git
+cd notebooklm-skill
+./install.sh
+```
+
+安裝後，三個全域命令可用：
 
 | 命令 | 說明 |
 |------|------|
@@ -133,27 +148,26 @@ Server 預設使用 stdio（標準 MCP 傳輸協定）。
 
 ### 註冊到 Claude Code
 
-`pip install .` 後，加入專案的 `.mcp.json`：
+加入專案的 `.mcp.json`（推薦 — 不需要預先安裝）：
+
+```json
+{
+  "mcpServers": {
+    "notebooklm": {
+      "command": "uvx",
+      "args": ["--from", "notebooklm-skill", "notebooklm-mcp"]
+    }
+  }
+}
+```
+
+或者已透過 `pip install notebooklm-skill` 安裝：
 
 ```json
 {
   "mcpServers": {
     "notebooklm": {
       "command": "notebooklm-mcp"
-    }
-  }
-}
-```
-
-或使用腳本路徑：
-
-```json
-{
-  "mcpServers": {
-    "notebooklm": {
-      "command": "python3",
-      "args": ["mcp_server/server.py"],
-      "cwd": "/absolute/path/to/notebooklm-skill"
     }
   }
 }

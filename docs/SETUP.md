@@ -14,15 +14,22 @@ Complete setup instructions for notebooklm-skill.
 
 ## 1. Install
 
-### Quick Install (recommended)
+### Option A: uvx (recommended — zero install)
 
 ```bash
-git clone https://github.com/claude-world/notebooklm-skill.git
-cd notebooklm-skill
-./install.sh    # pip install + Playwright + Claude Code Skill symlink
+uvx notebooklm-skill --help                    # Run CLI directly
+uvx --from notebooklm-skill notebooklm-mcp     # Start MCP server
 ```
 
-### Manual Install
+No clone, no install — `uvx` downloads and runs from [PyPI](https://pypi.org/project/notebooklm-skill/) automatically.
+
+### Option B: pip install from PyPI
+
+```bash
+pip install notebooklm-skill
+```
+
+### Option C: Install from source
 
 ```bash
 git clone https://github.com/claude-world/notebooklm-skill.git
@@ -30,7 +37,15 @@ cd notebooklm-skill
 pip install .                     # or: pip install -r requirements.txt
 ```
 
-After `pip install .`, three global commands are available:
+### Option D: One-line install (pip + Playwright + Claude Code Skill)
+
+```bash
+git clone https://github.com/claude-world/notebooklm-skill.git
+cd notebooklm-skill
+./install.sh
+```
+
+After installation, three global commands are available:
 
 | Command | Description |
 |---------|-------------|
@@ -133,27 +148,26 @@ The server runs on stdio by default (standard MCP transport).
 
 ### Register with Claude Code
 
-After `pip install .`, add to your project's `.mcp.json`:
+Add to your project's `.mcp.json` (recommended — no pre-install needed):
+
+```json
+{
+  "mcpServers": {
+    "notebooklm": {
+      "command": "uvx",
+      "args": ["--from", "notebooklm-skill", "notebooklm-mcp"]
+    }
+  }
+}
+```
+
+Or if you installed via `pip install notebooklm-skill`:
 
 ```json
 {
   "mcpServers": {
     "notebooklm": {
       "command": "notebooklm-mcp"
-    }
-  }
-}
-```
-
-Or use the script path directly:
-
-```json
-{
-  "mcpServers": {
-    "notebooklm": {
-      "command": "python3",
-      "args": ["mcp_server/server.py"],
-      "cwd": "/absolute/path/to/notebooklm-skill"
     }
   }
 }

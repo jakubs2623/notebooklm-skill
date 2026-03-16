@@ -57,13 +57,20 @@
 ## 快速開始
 
 ```bash
-# 方法 A：pip install（推薦）
-git clone https://github.com/claude-world/notebooklm-skill.git
-cd notebooklm-skill
-pip install .                     # 安裝全域 CLI 命令
+# 方法 A：uvx（推薦 — 零安裝）
+uvx notebooklm-skill --help
+uvx --from notebooklm-skill notebooklm-mcp   # 啟動 MCP Server
 
-# 方法 B：一鍵安裝（pip + Playwright + Claude Code Skill）
-./install.sh
+# 方法 B：pip install（從 PyPI）
+pip install notebooklm-skill
+
+# 方法 C：從原始碼安裝
+git clone https://github.com/claude-world/notebooklm-skill.git
+cd notebooklm-skill && pip install .
+
+# 方法 D：一鍵安裝（pip + Playwright + Claude Code Skill）
+git clone https://github.com/claude-world/notebooklm-skill.git
+cd notebooklm-skill && ./install.sh
 
 # Google 驗證（一次性，會開啟瀏覽器）
 python3 -m notebooklm login
@@ -303,27 +310,26 @@ ffmpeg -y \
 
 MCP Server 將 NotebookLM 操作公開為工具，任何 MCP 相容的客戶端都能使用。
 
-`pip install .` 後，加入專案的 `.mcp.json`：
+加入專案的 `.mcp.json`：
+
+```json
+{
+  "mcpServers": {
+    "notebooklm": {
+      "command": "uvx",
+      "args": ["--from", "notebooklm-skill", "notebooklm-mcp"]
+    }
+  }
+}
+```
+
+或者已透過 `pip install notebooklm-skill` 安裝：
 
 ```json
 {
   "mcpServers": {
     "notebooklm": {
       "command": "notebooklm-mcp"
-    }
-  }
-}
-```
-
-或使用腳本路徑：
-
-```json
-{
-  "mcpServers": {
-    "notebooklm": {
-      "command": "python3",
-      "args": ["mcp_server/server.py"],
-      "cwd": "/path/to/notebooklm-skill"
     }
   }
 }
