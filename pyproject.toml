@@ -21,11 +21,6 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
-
-[project.urls]
-Homepage = "https://github.com/claude-world/notebooklm-skill"
-Repository = "https://github.com/claude-world/notebooklm-skill"
-Issues = "https://github.com/claude-world/notebooklm-skill/issues"
 dependencies = [
     "notebooklm-py>=0.3.4",
     "playwright>=1.40.0",
@@ -41,6 +36,11 @@ dev = [
     "pytest-asyncio>=1.0",
     "ruff>=0.4",
 ]
+
+[project.urls]
+Homepage = "https://github.com/claude-world/notebooklm-skill"
+Repository = "https://github.com/claude-world/notebooklm-skill"
+Issues = "https://github.com/claude-world/notebooklm-skill/issues"
 
 [project.scripts]
 notebooklm-skill    = "scripts.notebooklm_client:main"
