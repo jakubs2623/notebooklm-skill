@@ -57,13 +57,20 @@ Sources (URLs, PDFs)          NotebookLM                Claude               Art
 ## Quick Start
 
 ```bash
-# Option A: pip install (recommended)
-git clone https://github.com/claude-world/notebooklm-skill.git
-cd notebooklm-skill
-pip install .                     # installs CLI commands globally
+# Option A: uvx (recommended — zero install)
+uvx notebooklm-skill --help
+uvx --from notebooklm-skill notebooklm-mcp   # Start MCP server
 
-# Option B: One-line install (pip + Playwright + Claude Code Skill)
-./install.sh
+# Option B: pip install from PyPI
+pip install notebooklm-skill
+
+# Option C: Install from source
+git clone https://github.com/claude-world/notebooklm-skill.git
+cd notebooklm-skill && pip install .
+
+# Option D: One-line install (pip + Playwright + Claude Code Skill)
+git clone https://github.com/claude-world/notebooklm-skill.git
+cd notebooklm-skill && ./install.sh
 
 # Authenticate with Google (one-time, opens browser)
 python3 -m notebooklm login
@@ -257,27 +264,26 @@ python scripts/notebooklm_client.py download --notebook "Research" --type slides
 
 ## MCP Server Setup
 
-After `pip install .`, add to your project's `.mcp.json`:
+Add to your project's `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "notebooklm": {
+      "command": "uvx",
+      "args": ["--from", "notebooklm-skill", "notebooklm-mcp"]
+    }
+  }
+}
+```
+
+Or if you installed via `pip install notebooklm-skill`:
 
 ```json
 {
   "mcpServers": {
     "notebooklm": {
       "command": "notebooklm-mcp"
-    }
-  }
-}
-```
-
-Or use the script directly:
-
-```json
-{
-  "mcpServers": {
-    "notebooklm": {
-      "command": "python3",
-      "args": ["mcp_server/server.py"],
-      "cwd": "/path/to/notebooklm-skill"
     }
   }
 }

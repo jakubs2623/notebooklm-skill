@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] — 2026-03-17
+
+### Added
+
+- **PyPI publishing**: Package now published to PyPI — `pip install notebooklm-skill` works without cloning
+- **uvx support**: Zero-install MCP server via `uvx --from notebooklm-skill notebooklm-mcp`
+- **pyproject.toml**: Added `authors`, `keywords`, `classifiers`, and `[project.urls]` for PyPI metadata
+
+### Changed
+
+- **MCP config**: `.mcp.json` now defaults to `uvx` invocation (no pre-install required)
+- **README**: Reordered Quick Start — uvx first, pip second, source third
+- **Release workflow**: Added `pypa/gh-action-pypi-publish` with trusted publishing (OIDC)
+
 ## [1.1.0] — 2026-03-15
 
 ### Added
@@ -68,6 +82,7 @@ Initial public release of notebooklm-skill.
 - `e75f8ea` docs: full zh-TW localization, doc fixes, video synthesis tool
 - `0f8edce` docs: add bilingual README and SETUP (EN + zh-TW)
 
+[1.2.0]: https://github.com/claude-world/notebooklm-skill/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/claude-world/notebooklm-skill/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/claude-world/notebooklm-skill/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/claude-world/notebooklm-skill/releases/tag/v1.0.0

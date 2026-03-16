@@ -4,11 +4,28 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "notebooklm-skill"
-version = "1.1.0"
+version = "1.2.0"
 description = "NotebookLM research automation — CLI, MCP server, and Claude Code Skill"
 readme = "README.md"
 license = {file = "LICENSE"}
 requires-python = ">=3.10"
+authors = [{name = "Claude World", email = "hello@claude-world.com"}]
+keywords = ["notebooklm", "mcp", "claude", "research", "ai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Homepage = "https://github.com/claude-world/notebooklm-skill"
+Repository = "https://github.com/claude-world/notebooklm-skill"
+Issues = "https://github.com/claude-world/notebooklm-skill/issues"
 dependencies = [
     "notebooklm-py>=0.3.4",
     "playwright>=1.40.0",
