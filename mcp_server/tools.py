@@ -7,9 +7,25 @@ All functions are async and return JSON-serializable dicts.
 
 import os
 from contextlib import asynccontextmanager
+from pathlib import Path
 from typing import Any
 
 from notebooklm import NotebookLMClient
+
+# ---------------------------------------------------------------------------
+# Auth constants
+# ---------------------------------------------------------------------------
+
+_STORAGE_PATH = Path.home() / ".notebooklm" / "storage_state.json"
+
+_AUTH_ERROR_MESSAGE = (
+    "NotebookLM authentication required. No session found at "
+    f"{_STORAGE_PATH}\n\n"
+    "Run ONE of these commands to log in (opens a browser):\n"
+    "  uvx notebooklm login            # if using uvx\n"
+    "  python3 -m notebooklm login     # if using pip install\n\n"
+    "After logging in, retry your request — no restart needed."
+)
 
 # ---------------------------------------------------------------------------
 # Shared client helper
@@ -22,9 +38,19 @@ async def _get_client():
 
     Uses ``NotebookLMClient.from_storage()`` which reads cookies/tokens
     from the default storage location (~/.notebooklm/).
+
+    Raises a clear error with login instructions if no session exists.
     """
-    async with await NotebookLMClient.from_storage() as client:
-        yield client
+    if not _STORAGE_PATH.exists():
+        raise RuntimeError(_AUTH_ERROR_MESSAGE)
+    try:
+        async with await NotebookLMClient.from_storage() as client:
+            yield client
+    except Exception as exc:
+        msg = str(exc).lower()
+        if "auth" in msg or "login" in msg or "credential" in msg or "session" in msg or "storage" in msg:
+            raise RuntimeError(_AUTH_ERROR_MESSAGE) from exc
+        raise
 
 
 # ---------------------------------------------------------------------------
