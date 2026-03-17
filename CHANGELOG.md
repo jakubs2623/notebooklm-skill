@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] — 2026-03-17
+
+### Added
+
+- **MCP Server**: AI-friendly `[AUTH_REQUIRED]` error when Google session is missing — AI clients (Claude Code, Cursor) now guide users to run `uvx notebooklm login`
+- **MCP Server**: Server instructions include authentication flow so AI knows upfront
+
+### Changed
+
+- **Docs**: All documentation (README, README.zh-TW, SETUP, SETUP.zh-TW) now show `uvx notebooklm login` as the recommended auth method
+
 ## [1.2.0] — 2026-03-17
 
 ### Added
@@ -82,6 +93,7 @@ Initial public release of notebooklm-skill.
 - `e75f8ea` docs: full zh-TW localization, doc fixes, video synthesis tool
 - `0f8edce` docs: add bilingual README and SETUP (EN + zh-TW)
 
+[1.2.1]: https://github.com/claude-world/notebooklm-skill/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/claude-world/notebooklm-skill/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/claude-world/notebooklm-skill/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/claude-world/notebooklm-skill/compare/v1.0.0...v1.0.1
