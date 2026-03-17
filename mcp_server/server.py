@@ -92,7 +92,12 @@ mcp = FastMCP(
         "NotebookLM research engine — create notebooks, ask questions, "
         "generate and download 10 artifact types (audio, video, slides, "
         "report, study-guide, quiz, flashcards, mind-map, infographic, "
-        "data-table), and run full research-to-content pipelines."
+        "data-table), and run full research-to-content pipelines.\n\n"
+        "AUTHENTICATION: Requires a one-time Google login before first use. "
+        "If any tool returns an [AUTH_REQUIRED] error, ask the user to run "
+        "`uvx notebooklm login` in their terminal. This opens a browser for "
+        "Google sign-in and saves the session to ~/.notebooklm/. "
+        "After login, retry the request — no restart needed."
     ),
 )
 

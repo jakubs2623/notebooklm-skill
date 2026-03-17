@@ -19,12 +19,16 @@ from notebooklm import NotebookLMClient
 _STORAGE_PATH = Path.home() / ".notebooklm" / "storage_state.json"
 
 _AUTH_ERROR_MESSAGE = (
-    "NotebookLM authentication required. No session found at "
-    f"{_STORAGE_PATH}\n\n"
-    "Run ONE of these commands to log in (opens a browser):\n"
-    "  uvx notebooklm login            # if using uvx\n"
-    "  python3 -m notebooklm login     # if using pip install\n\n"
-    "After logging in, retry your request — no restart needed."
+    "[AUTH_REQUIRED] NotebookLM authentication is not set up. "
+    f"No session found at {_STORAGE_PATH}.\n\n"
+    "ACTION REQUIRED: Tell the user to run this command in their terminal "
+    "(it will open a browser for Google login):\n\n"
+    "  uvx notebooklm login\n\n"
+    "Alternative (if uvx is not installed):\n\n"
+    "  python3 -m notebooklm login\n\n"
+    "After login completes, the user can retry their request immediately — "
+    "no MCP server restart needed. The session is saved to "
+    "~/.notebooklm/ and typically lasts several weeks."
 )
 
 # ---------------------------------------------------------------------------
