@@ -61,16 +61,17 @@ notebooklm-skill list             # 或：python scripts/notebooklm_client.py li
 
 ## 2. Google 驗證
 
-notebooklm-py 使用瀏覽器登入 Google（不需要 OAuth Client ID 或 Google Cloud 專案）。
+notebooklm-py 使用瀏覽器登入 Google。不需要 API Key、不需要 OAuth Client ID、不需要 Google Cloud 專案。
 
 ### 步驟 2a：執行登入
 
 ```bash
-python3 -m notebooklm login
+uvx notebooklm login              # 使用 uvx（推薦）
+python3 -m notebooklm login       # 使用 pip install
 ```
 
 這會：
-1. 開啟 Chromium 瀏覽器
+1. 開啟 Chromium 瀏覽器（需要時自動安裝）
 2. 顯示 Google 登入頁面 — 使用你的 Google 帳號登入
 3. 登入後自動儲存 Session 至 `~/.notebooklm/storage_state.json`
 4. 之後所有操作都是純 HTTP 呼叫（不再需要瀏覽器）
@@ -78,15 +79,11 @@ python3 -m notebooklm login
 ### 步驟 2b：驗證登入狀態
 
 ```bash
-python scripts/auth_helper.py verify
+uvx notebooklm-skill list         # 使用 uvx
+notebooklm-skill list              # 使用 pip install
 ```
 
-預期輸出：
-
-```
-[auth] Verifying NotebookLM authentication...
-[auth] Authentication OK — found N notebooks.
-```
+預期輸出：你的 NotebookLM 筆記本的 JSON 陣列（可能是空的 `[]`）。
 
 ### 步驟 2c：（選用）建立 .env
 

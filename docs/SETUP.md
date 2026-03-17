@@ -61,16 +61,17 @@ notebooklm-skill list             # or: python scripts/notebooklm_client.py list
 
 ## 2. Google Authentication
 
-notebooklm-py uses browser-based Google login. No OAuth Client ID or Google Cloud project needed.
+notebooklm-py uses browser-based Google login. No API keys, no OAuth Client ID, no Google Cloud project needed.
 
 ### Step 2a: Run Login
 
 ```bash
-python3 -m notebooklm login
+uvx notebooklm login              # if using uvx (recommended)
+python3 -m notebooklm login       # if using pip install
 ```
 
 This will:
-1. Open a Chromium browser
+1. Open a Chromium browser (auto-installs if needed)
 2. Show the Google login page — sign in with your Google account
 3. Automatically save the session to `~/.notebooklm/storage_state.json`
 4. All subsequent operations use pure HTTP calls (no browser needed)
@@ -78,15 +79,11 @@ This will:
 ### Step 2b: Verify Login
 
 ```bash
-python scripts/auth_helper.py verify
+uvx notebooklm-skill list         # if using uvx
+notebooklm-skill list              # if using pip install
 ```
 
-Expected output:
-
-```
-[auth] Verifying NotebookLM authentication...
-[auth] Authentication OK — found N notebooks.
-```
+Expected output: a JSON array of your NotebookLM notebooks (may be empty `[]`).
 
 ### Step 2c: (Optional) Create .env
 

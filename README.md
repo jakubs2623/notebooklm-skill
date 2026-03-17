@@ -73,9 +73,10 @@ git clone https://github.com/claude-world/notebooklm-skill.git
 cd notebooklm-skill && ./install.sh
 
 # Authenticate with Google (one-time, opens browser)
-python3 -m notebooklm login
+uvx notebooklm login              # if using uvx
+# or: python3 -m notebooklm login  # if using pip install
 
-# Use global commands
+# Use commands (uvx or direct — both work the same)
 notebooklm-skill create --title "My Research" --sources https://example.com/article
 notebooklm-skill ask --notebook "My Research" --query "What are the key findings?"
 notebooklm-skill podcast --notebook "My Research" --lang en --output podcast.m4a
@@ -89,15 +90,21 @@ See [docs/SETUP.md](docs/SETUP.md) for the full setup guide.
 
 ## Authentication
 
-notebooklm-py uses browser-based Google login (no OAuth Client ID needed):
+notebooklm-py uses browser-based Google login. No API keys, no OAuth Client ID, no Google Cloud project needed.
+
+```bash
+# One-time login (opens Chromium, sign in with Google)
+uvx notebooklm login              # if using uvx
+python3 -m notebooklm login       # if using pip install
+```
 
 | Step | Command | What happens |
 |------|---------|-------------|
-| **Login** | `python3 -m notebooklm login` | Opens Chromium, user logs into Google |
+| **Login** | `uvx notebooklm login` | Opens Chromium, user logs into Google |
 | **Session storage** | Automatic | Saved to `~/.notebooklm/storage_state.json` |
-| **Subsequent use** | `NotebookLMClient.from_storage()` | Reads saved session, pure HTTP calls |
-| **Verify** | `python scripts/auth_helper.py verify` | Loads client + calls `notebooks.list()` |
-| **Clear** | `python scripts/auth_helper.py clear` | Removes `~/.notebooklm/` directory |
+| **Subsequent use** | All CLI / MCP commands | Reads saved session, pure HTTP calls |
+| **Verify** | `uvx notebooklm-skill list` | Lists notebooks to confirm auth works |
+| **Clear** | `rm -rf ~/.notebooklm` | Removes stored session |
 
 Session typically lasts weeks. Re-run `login` if you get authentication errors.
 

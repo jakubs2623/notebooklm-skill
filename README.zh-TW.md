@@ -73,9 +73,10 @@ git clone https://github.com/claude-world/notebooklm-skill.git
 cd notebooklm-skill && ./install.sh
 
 # Google 驗證（一次性，會開啟瀏覽器）
-python3 -m notebooklm login
+uvx notebooklm login              # 使用 uvx
+# 或：python3 -m notebooklm login  # 使用 pip install
 
-# 使用全域命令
+# 使用命令（uvx 或直接執行皆可）
 notebooklm-skill create --title "我的研究" --sources https://example.com/article
 notebooklm-skill ask --notebook "我的研究" --query "這篇文章的關鍵發現是什麼？"
 notebooklm-skill podcast --notebook "我的研究" --lang zh-TW --output podcast.m4a
@@ -89,15 +90,21 @@ notebooklm-mcp                   # 啟動 MCP Server（stdio 模式）
 
 ## 驗證方式
 
-notebooklm-py 使用瀏覽器登入 Google（不需要 OAuth Client ID）：
+notebooklm-py 使用瀏覽器登入 Google。不需要 API Key、不需要 OAuth Client ID、不需要 Google Cloud 專案。
+
+```bash
+# 一次性登入（開啟 Chromium，用 Google 帳號登入）
+uvx notebooklm login              # 使用 uvx
+python3 -m notebooklm login       # 使用 pip install
+```
 
 | 步驟 | 指令 | 說明 |
 |------|------|------|
-| **登入** | `python3 -m notebooklm login` | 開啟 Chromium，使用者登入 Google |
+| **登入** | `uvx notebooklm login` | 開啟 Chromium，使用者登入 Google |
 | **Session 儲存** | 自動 | 儲存至 `~/.notebooklm/storage_state.json` |
-| **後續使用** | `NotebookLMClient.from_storage()` | 讀取 Session，純 HTTP 呼叫 |
-| **驗證** | `python scripts/auth_helper.py verify` | 載入 Client 並呼叫 `notebooks.list()` |
-| **清除** | `python scripts/auth_helper.py clear` | 刪除 `~/.notebooklm/` 目錄 |
+| **後續使用** | 所有 CLI / MCP 命令 | 讀取 Session，純 HTTP 呼叫 |
+| **驗證** | `uvx notebooklm-skill list` | 列出筆記本確認驗證正常 |
+| **清除** | `rm -rf ~/.notebooklm` | 刪除儲存的 Session |
 
 Session 通常可維持數週。如遇驗證錯誤，重新執行 `login` 即可。
 
