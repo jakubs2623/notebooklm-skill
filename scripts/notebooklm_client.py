@@ -166,7 +166,9 @@ ARTIFACT_TYPES = {
     "quiz":        ("generate_quiz",             "download_quiz",        "json"),
     "flashcards":  ("generate_flashcards",       "download_flashcards",  "json"),
     "mind-map":    ("generate_mind_map",         "download_mind_map",    "json"),
-    "infographic": ("generate_infographic",      "download_infographic", "png"),
+    # infographic: download unreliable (fragile structure parsing, often fails/hangs).
+    # Use 'slides' instead for downloadable visual content.
+    "infographic": ("generate_infographic",      None,                   "png"),
     "data-table":  ("generate_data_table",       "download_data_table",  "csv"),
     "study-guide": ("generate_study_guide",      "download_report",      "md"),
 }
@@ -363,7 +365,8 @@ async def cmd_generate(args) -> None:
     """Generate an artifact from a notebook.
 
     Supports: audio, video, cinematic, slides, report, quiz, flashcards,
-    mind-map, infographic, data-table, study-guide.
+    mind-map, data-table, study-guide.
+    Note: infographic generation works but download is unreliable. Use 'slides' instead.
     """
     from notebooklm import NotebookLMClient
 
@@ -376,6 +379,9 @@ async def cmd_generate(args) -> None:
         )
 
     gen_method_name, dl_method_name, default_ext = ARTIFACT_TYPES[artifact_type]
+
+    if artifact_type == "infographic":
+        _err("WARNING: infographic download is unreliable. Use 'slides' for downloadable visual content.")
 
     async with await NotebookLMClient.from_storage() as client:
         _err(f"Finding notebook '{args.notebook}'...")

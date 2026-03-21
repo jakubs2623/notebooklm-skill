@@ -69,7 +69,9 @@ PLATFORM_SPECS = {
     "generic": {"max_chars": 1000, "style": "clear and informative"},
 }
 
-# All artifact types supported by NotebookLM
+# Artifact types supported by NotebookLM for automated pipelines.
+# infographic excluded: download is unreliable (fragile structure parsing).
+# Use 'slides' instead for downloadable visual content.
 ARTIFACT_TYPES = [
     "audio",
     "video",
@@ -78,7 +80,7 @@ ARTIFACT_TYPES = [
     "quiz",
     "flashcards",
     "mind-map",
-    "infographic",
+    # "infographic",  # download unreliable — use 'slides' instead
     "data-table",
     "study-guide",
 ]
@@ -688,7 +690,7 @@ def workflow_generate_all(args) -> None:
         "quiz": "generate_quiz",
         "flashcards": "generate_flashcards",
         "mind-map": "generate_mind_map",
-        "infographic": "generate_infographic",
+        # "infographic": download unreliable — excluded from pipeline
         "data-table": "generate_data_table",
         "study-guide": "generate_study_guide",
     }
@@ -701,7 +703,7 @@ def workflow_generate_all(args) -> None:
         "quiz": "download_quiz",
         "flashcards": "download_flashcards",
         "mind-map": "download_mind_map",
-        "infographic": "download_infographic",
+        # "infographic": download unreliable — excluded from pipeline
         "data-table": "download_data_table",
         "study-guide": "download_report",
     }
@@ -714,7 +716,7 @@ def workflow_generate_all(args) -> None:
         "quiz": "json",
         "flashcards": "json",
         "mind-map": "json",
-        "infographic": "png",
+        # "infographic": excluded — use slides instead
         "data-table": "csv",
         "study-guide": "md",
     }
@@ -762,7 +764,7 @@ def workflow_generate_all(args) -> None:
                     generate_method = getattr(client.artifacts, generate_method_name)
                     kwargs = {}
                     if artifact_type in ("audio", "video", "slides", "report",
-                                         "infographic", "data-table", "study-guide"):
+                                         "data-table", "study-guide"):
                         kwargs["language"] = language
                     status = await generate_method(nb.id, **kwargs)
                     generation_tasks[artifact_type] = status.task_id
@@ -881,9 +883,10 @@ Workflows:
         --title "Weekly AI Digest" --max-entries 15
 
   generate-all
-    Creates a notebook, generates all artifact types (audio, video, slides,
-    report, quiz, flashcards, mind-map, infographic, data-table, study-guide),
+    Creates a notebook, generates artifact types (audio, video, slides,
+    report, quiz, flashcards, mind-map, data-table, study-guide),
     waits for completion, and downloads everything.
+    Note: infographic excluded (download unreliable). Use slides instead.
 
     python pipeline.py generate-all \\
         --sources https://example.com/article \\

@@ -131,7 +131,7 @@ Session 通常可維持數週。如遇驗證錯誤，重新執行 `login` 即可
 | **trend-pulse 整合** | 自動發現熱門話題進行研究 | 可用 |
 | **threads-viral-agent 整合** | 發布研究支撐的社群貼文 | 可用 |
 
-### 產出物生成（10 種類型）
+### 產出物生成（9 種可下載類型）
 
 | 產出物 | 格式 | 說明 |
 |---|---|---|
@@ -260,7 +260,7 @@ python scripts/pipeline.py batch-digest \
 
 ### 5. 生成所有產出物
 
-建立筆記本並生成全部 10 種產出物。
+建立筆記本並生成全部 9 種可下載產出物。
 
 ```bash
 # 生成全部
@@ -393,7 +393,7 @@ THREADS_TOKEN=your-threads-token       # 自動發布到 Threads
 | `add-source` | 加入來源（URL、文字或檔案）到現有筆記本 |
 | `ask` | 對筆記本提問研究問題（回傳答案 + 引用） |
 | `summarize` | 取得筆記本摘要 |
-| `generate` | 生成產出物（音檔、影片、投影片等） |
+| `generate` | 生成產出物（音檔、影片、投影片等，⚠️ infographic 下載不可靠，用 slides 替代） |
 | `download` | 下載已生成的產出物 |
 | `research` | 執行深度網頁研究 |
 | `podcast` | `generate --type audio` 的快捷指令（含自動下載） |
@@ -419,7 +419,7 @@ THREADS_TOKEN=your-threads-token       # 自動發布到 Threads
 | `nlm_add_source` | 加入來源到現有筆記本 |
 | `nlm_ask` | 對筆記本提問（回傳答案 + 引用） |
 | `nlm_summarize` | 取得筆記本摘要 |
-| `nlm_generate` | 生成產出物（10 種類型） |
+| `nlm_generate` | 生成產出物（9 種可下載，⚠️ infographic 除外） |
 | `nlm_download` | 下載已生成的產出物 |
 | `nlm_list_sources` | 列出筆記本中的來源 |
 | `nlm_list_artifacts` | 列出已生成的產出物 |

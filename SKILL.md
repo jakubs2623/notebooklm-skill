@@ -17,7 +17,7 @@ description: >
 # NotebookLM Research Agent
 
 A fully autonomous AI research agent that ingests sources into Google NotebookLM,
-runs deep web research, synthesizes knowledge through cited Q&A and 10 artifact types,
+runs deep web research, synthesizes knowledge through cited Q&A and 9 downloadable artifact types,
 creates polished content drafts, and optionally publishes to social platforms.
 
 **Zero-cost research engine** -- NotebookLM is free. No API keys. No per-query charges.
@@ -46,7 +46,7 @@ MCP server auto-load the stored session. No API keys or environment variables ne
 **Core Principle: NotebookLM provides cited research, Claude creates content.**
 
 NotebookLM handles source ingestion, indexing, deep web research, cited answers,
-and native artifact generation (10 types). Claude uses that research output to write
+and native artifact generation (9 downloadable types). Claude uses that research output to write
 original articles, social posts, and reports. The pipeline is zero-cost and produces
 citation-backed content.
 
@@ -75,7 +75,7 @@ citation-backed content.
 │  Google Drive│  → citations │                 │ Direct output:                  │
 │  File upload │              │ trend-pulse     │  → Markdown file                │
 │              │ Artifacts    │  → topic ideas  │  → JSON data                    │
-│ Research:    │ (10 types):  │                 │  → Newsletter draft             │
+│ Research:    │ (9 types):   │                 │  → Newsletter draft             │
 │  web (fast)  │  audio       │ NotebookLM      │  → Podcast MP4                  │
 │  web (deep)  │  video       │ artifacts used  │  → Video MP4                    │
 │  drive       │  cinematic*  │ directly:       │  → Slide deck PDF               │
@@ -96,7 +96,7 @@ citation-backed content.
 |---|---|---|
 | **Notebooks** | `client.notebooks` | Create, list, get, delete, rename, describe, share |
 | **Sources** | `client.sources` | Add URL/text/file/Drive, list, delete, rename, refresh, guide, fulltext, wait |
-| **Artifacts** | `client.artifacts` | Generate 10 types, poll status, download, list, delete, rename, revise slides |
+| **Artifacts** | `client.artifacts` | Generate 9 downloadable types, poll status, download, list, delete, rename, revise slides |
 | **Chat** | `client.chat` | Ask with citations, follow-up, conversation history, configure persona |
 | **Research** | `client.research` | Web/Drive research, poll results, import discovered sources |
 | **Notes** | `client.notes` | Create, list, update, delete text notes and mind maps |
@@ -262,7 +262,7 @@ async with await NotebookLMClient.from_storage() as client:
 ## Phase 2: SYNTHESIZE -- Research & Analysis
 
 Once sources are ingested, use NotebookLM to extract knowledge through cited Q&A
-and generate 10 types of native artifacts.
+and generate 9 types of downloadable native artifacts.
 
 ### Ask Questions (Cited Answers)
 
@@ -318,8 +318,11 @@ await client.chat.configure(nb.id, response_length=ChatResponseLength.LONGER)
 
 ### Generate Artifacts (10 Types)
 
-NotebookLM natively generates 10 artifact types from ingested sources. These are
+NotebookLM natively generates 9 downloadable artifact types from ingested sources. These are
 generated server-side by Google -- no LLM cost on our end.
+
+> **Warning:** `infographic` generation works but download is unreliable (fragile API
+> structure parsing). Use `slides` instead for downloadable visual content.
 
 **Built-in CLI:**
 
@@ -329,7 +332,7 @@ notebooklm generate video NOTEBOOK_ID
 notebooklm generate report NOTEBOOK_ID --format briefing_doc
 notebooklm generate quiz NOTEBOOK_ID
 notebooklm generate flashcards NOTEBOOK_ID
-notebooklm generate infographic NOTEBOOK_ID
+# notebooklm generate infographic NOTEBOOK_ID  # ⚠️ download unreliable
 notebooklm generate slide-deck NOTEBOOK_ID
 notebooklm generate data-table NOTEBOOK_ID
 notebooklm generate mind-map NOTEBOOK_ID
@@ -386,11 +389,11 @@ python3 scripts/notebooklm_client.py generate flashcards \
 python3 scripts/notebooklm_client.py generate mind-map \
   --notebook NOTEBOOK_ID
 
-# 10. Infographic
-python3 scripts/notebooklm_client.py generate infographic \
-  --notebook NOTEBOOK_ID \
-  --orientation landscape \
-  --detail standard
+# 10. Infographic — ⚠️ download unreliable, use slides instead
+# python3 scripts/notebooklm_client.py generate infographic \
+#   --notebook NOTEBOOK_ID \
+#   --orientation landscape \
+#   --detail standard
 
 # 11. Data Table
 python3 scripts/notebooklm_client.py generate data-table \
@@ -761,7 +764,7 @@ notebooklm-mcp --http --port 8765
 
 | Tool | Parameters | Description |
 |---|---|---|
-| `nlm_generate(notebook, type, lang?, instructions?)` | notebook, artifact type | Generate any of 10 artifact types |
+| `nlm_generate(notebook, type, lang?, instructions?)` | notebook, artifact type | Generate any of 9 artifact types (infographic excluded) |
 | `nlm_download(notebook, type, output_path)` | notebook, artifact type, output | Download artifact to file |
 | `nlm_list_artifacts(notebook, type?)` | notebook ID, optional type filter | List artifacts in notebook |
 
@@ -827,7 +830,7 @@ notebooklm generate video NOTEBOOK_ID                      # Video
 notebooklm generate report NOTEBOOK_ID --format briefing_doc
 notebooklm generate quiz NOTEBOOK_ID
 notebooklm generate flashcards NOTEBOOK_ID
-notebooklm generate infographic NOTEBOOK_ID
+# notebooklm generate infographic NOTEBOOK_ID  # ⚠️ download unreliable
 notebooklm generate slide-deck NOTEBOOK_ID
 notebooklm generate data-table NOTEBOOK_ID
 notebooklm generate mind-map NOTEBOOK_ID
@@ -964,7 +967,7 @@ Common fixes:
 | Quiz | `generate quiz` | `download quiz` | JSON (structured) | 10-30 sec |
 | Flashcards | `generate flashcards` | `download flashcards` | JSON (structured) | 10-30 sec |
 | Mind Map | `generate mind-map` | `download mind-map` | JSON (tree) | 5-15 sec |
-| Infographic | `generate infographic` | `download infographic` | Image | 30-120 sec |
+| ~~Infographic~~ | ~~`generate infographic`~~ | ~~`download infographic`~~ | ~~Image~~ | ⚠️ download unreliable — use slides |
 | Data Table | `generate data-table` | `download data-table` | CSV/JSON | 10-30 sec |
 
 ## Trigger Patterns
@@ -979,7 +982,7 @@ Common fixes:
 - "Make a slide deck from this research"
 - "Create a quiz from this material"
 - "Generate flashcards for studying X"
-- "Create an infographic about X"
+- "Create an infographic about X" (⚠️ use slides instead — infographic download unreliable)
 - "Build a mind map of X"
 - "Generate a data table comparing X and Y"
 - "Write a report on X"

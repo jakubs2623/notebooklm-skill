@@ -241,7 +241,7 @@ class DriveMimeType(Enum):
 | `download_quiz(notebook_id, output_path, artifact_id?, output_format?)` | `notebook_id: str, output_path: str, artifact_id: str \| None, output_format: str="json"` | `str` | Download quiz (JSON, Markdown, or HTML) |
 | `download_flashcards(notebook_id, output_path, artifact_id?, output_format?)` | `notebook_id: str, output_path: str, artifact_id: str \| None, output_format: str="json"` | `str` | Download flashcards (JSON, Markdown, or HTML) |
 | `download_mind_map(notebook_id, output_path, artifact_id?)` | `notebook_id: str, output_path: str, artifact_id: str \| None` | `str` | Download mind map (JSON) |
-| `download_infographic(notebook_id, output_path, artifact_id?)` | `notebook_id: str, output_path: str, artifact_id: str \| None` | `str` | Download infographic (PNG) |
+| `download_infographic(notebook_id, output_path, artifact_id?)` | `notebook_id: str, output_path: str, artifact_id: str \| None` | `str` | ⚠️ Download infographic (PNG) — **unreliable**, use slides instead |
 | `download_data_table(notebook_id, output_path, artifact_id?)` | `notebook_id: str, output_path: str, artifact_id: str \| None` | `str` | Download data table (CSV) |
 | `get_report_content(notebook_id, artifact_id?)` | `notebook_id: str, artifact_id: str \| None` | `str` | Get report markdown text |
 | `get_quiz_data(notebook_id, artifact_id?)` | `notebook_id: str, artifact_id: str \| None` | `dict` | Get quiz as structured data |
@@ -633,7 +633,7 @@ notebooklm generate video NOTEBOOK_ID
 notebooklm generate report NOTEBOOK_ID --format briefing_doc
 notebooklm generate quiz NOTEBOOK_ID
 notebooklm generate flashcards NOTEBOOK_ID
-notebooklm generate infographic NOTEBOOK_ID
+# notebooklm generate infographic NOTEBOOK_ID  # ⚠️ download unreliable
 notebooklm generate slide-deck NOTEBOOK_ID
 notebooklm generate data-table NOTEBOOK_ID
 notebooklm generate mind-map NOTEBOOK_ID
@@ -646,7 +646,7 @@ notebooklm download study-guide NOTEBOOK_ID output.md
 notebooklm download quiz NOTEBOOK_ID output.json
 notebooklm download flashcards NOTEBOOK_ID output.json
 notebooklm download mind-map NOTEBOOK_ID output.json
-notebooklm download infographic NOTEBOOK_ID output.png
+# notebooklm download infographic NOTEBOOK_ID output.png  # ⚠️ unreliable
 notebooklm download data-table NOTEBOOK_ID output.csv
 
 # Research

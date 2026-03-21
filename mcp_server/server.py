@@ -90,9 +90,10 @@ mcp = FastMCP(
     "notebooklm",
     instructions=(
         "NotebookLM research engine — create notebooks, ask questions, "
-        "generate and download 10 artifact types (audio, video, slides, "
-        "report, study-guide, quiz, flashcards, mind-map, infographic, "
-        "data-table), and run full research-to-content pipelines.\n\n"
+        "generate and download 9 artifact types (audio, video, slides, "
+        "report, study-guide, quiz, flashcards, mind-map, "
+        "data-table), and run full research-to-content pipelines. "
+        "Note: infographic is NOT supported (download unreliable, use slides instead).\n\n"
         "AUTHENTICATION: Requires a one-time Google login before first use. "
         "If any tool returns an [AUTH_REQUIRED] error, ask the user to run "
         "`uvx notebooklm login` in their terminal. This opens a browser for "
@@ -277,17 +278,18 @@ async def nlm_generate(
 ) -> dict:
     """Generate an artifact from a notebook.
 
-    Supports 10 artifact types. Waits for generation to complete.
+    Supports 9 artifact types (infographic excluded — download unreliable).
 
     Args:
         notebook: Notebook ID or title.
         type: Artifact type — one of: audio, video, slides, report, quiz,
-              flashcards, mind-map, infographic, data-table, study-guide.
+              flashcards, mind-map, data-table, study-guide.
+              ⚠️ infographic is NOT supported (download unreliable). Use 'slides' instead.
         lang: Language code (default "en"). Used for audio, video, slides,
-              report, infographic, data-table, study-guide.
+              report, data-table, study-guide.
         instructions: Optional generation instructions. Passed as
                       "instructions" for audio/video/slides/quiz/flashcards/
-                      infographic/data-table, or as "extra_instructions" for
+                      data-table, or as "extra_instructions" for
                       report/study-guide. Not used for mind-map.
 
     Returns:
@@ -313,7 +315,7 @@ async def nlm_download(
 ) -> dict:
     """Download a generated artifact to a local file.
 
-    Supports all 10 artifact types:
+    Supports 9 artifact types (infographic excluded — download unreliable):
       - audio → .m4a
       - video → .mp4
       - slides → PDF (default) or PPTX (output_format="pptx")
@@ -322,13 +324,13 @@ async def nlm_download(
       - quiz → JSON (default), Markdown ("markdown"), or HTML ("html")
       - flashcards → JSON (default), Markdown ("markdown"), or HTML ("html")
       - mind-map → JSON
-      - infographic → PNG
       - data-table → CSV
+      ⚠️ infographic is NOT downloadable. Use 'slides' for visual content.
 
     Args:
         notebook: Notebook ID or title.
         type: Artifact type — audio, video, slides, report, study-guide,
-              quiz, flashcards, mind-map, infographic, or data-table.
+              quiz, flashcards, mind-map, or data-table.
         output_path: Local file path to save the artifact.
         output_format: Optional output format for types that support it.
                        slides: "pdf" (default) or "pptx".

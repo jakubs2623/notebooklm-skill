@@ -63,7 +63,7 @@ notebooklm-mcp --http     # HTTP mode on port 8765
 | `nlm_add_source` | Add source to existing notebook |
 | `nlm_ask` | Ask question (returns answer + citations) |
 | `nlm_summarize` | Get notebook summary |
-| `nlm_generate` | Generate artifact (10 types) |
+| `nlm_generate` | Generate artifact (9 types, infographic excluded) |
 | `nlm_download` | Download generated artifact |
 | `nlm_list_sources` | List sources in notebook |
 | `nlm_list_artifacts` | List generated artifacts |
@@ -71,9 +71,11 @@ notebooklm-mcp --http     # HTTP mode on port 8765
 | `nlm_research_pipeline` | Full research pipeline |
 | `nlm_trend_research` | Trend-to-research pipeline |
 
-## Artifact Types (10)
+## Artifact Types (9 downloadable)
 
-audio, video, slides, report, quiz, flashcards, mind-map, infographic, data-table, study-guide
+audio, video, slides, report, quiz, flashcards, mind-map, data-table, study-guide
+
+> ⚠️ `infographic`: generation works but download is unreliable. Use `slides` instead.
 
 ## Project Structure
 

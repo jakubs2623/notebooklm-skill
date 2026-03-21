@@ -280,7 +280,7 @@ _ARTIFACT_GENERATORS = {
     "quiz": "generate_quiz",
     "flashcards": "generate_flashcards",
     "mind-map": "generate_mind_map",
-    "infographic": "generate_infographic",
+    # "infographic" excluded — download unreliable, blocked by guard below
     "data-table": "generate_data_table",
     "study-guide": "generate_study_guide",
 }
@@ -295,7 +295,9 @@ _ARTIFACT_DOWNLOADERS = {
     "quiz":        ("download_quiz",        True),
     "flashcards":  ("download_flashcards",  True),
     "mind-map":    ("download_mind_map",    False),
-    "infographic": ("download_infographic", False),
+    # infographic: download exists in library but is unreliable (fragile
+    # structure parsing).  Generate works, download often fails/hangs.
+    # "infographic": ("download_infographic", False),
     "data-table":  ("download_data_table",  False),
 }
 
@@ -306,7 +308,17 @@ async def generate_artifact(
     lang: str = "en",
     instructions: str | None = None,
 ) -> dict[str, Any]:
-    """Generate an artifact (audio, video, slides, report, quiz, etc.)."""
+    """Generate an artifact (audio, video, slides, report, quiz, etc.).
+
+    Note: infographic generation works but download is unreliable.
+    Use 'slides' instead for downloadable visual content.
+    """
+    if artifact_type == "infographic":
+        return {
+            "status": "failed",
+            "error": "Infographic download is unreliable (API limitation). "
+            "Use 'slides' instead for downloadable visual content.",
+        }
     if artifact_type not in _ARTIFACT_GENERATORS:
         return {
             "status": "failed",
@@ -324,13 +336,13 @@ async def generate_artifact(
 
         # language — accepted by most types except quiz, flashcards, mind-map
         if artifact_type in ("audio", "video", "slides", "report",
-                             "infographic", "data-table", "study-guide"):
+                             "data-table", "study-guide"):
             kwargs["language"] = lang
 
         # instructions — parameter name varies by type
         if instructions:
             if artifact_type in ("audio", "video", "slides", "quiz",
-                                 "flashcards", "infographic", "data-table"):
+                                 "flashcards", "data-table"):
                 kwargs["instructions"] = instructions
             elif artifact_type in ("report", "study-guide"):
                 kwargs["extra_instructions"] = instructions

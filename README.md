@@ -131,7 +131,7 @@ Session typically lasts weeks. Re-run `login` if you get authentication errors.
 | **trend-pulse integration** | Auto-discover trending topics to research | Available |
 | **threads-viral-agent integration** | Publish research-backed social posts | Available |
 
-### Artifact Generation (10 types)
+### Artifact Generation (9 downloadable types)
 
 | Artifact | Format | Description |
 |---|---|---|
@@ -177,7 +177,7 @@ Most artifacts support language selection (e.g., `--lang zh-TW`). Exceptions: qu
 |                               | quiz      |                    |
 |                               | flashcards|                    |
 |                               | mind-map  |                    |
-|                               | infographic|                   |
+|                               | infographic| ⚠️ no download    |
 |                               | data-table|                    |
 |                               | study-guide|                   |
 |                               +-----------+                    |
@@ -344,7 +344,7 @@ Claude will automatically detect the skill when you ask about research, Notebook
 | `nlm_add_source` | Add source to existing notebook |
 | `nlm_ask` | Ask question (returns answer + citations) |
 | `nlm_summarize` | Get notebook summary |
-| `nlm_generate` | Generate artifact (10 types) |
+| `nlm_generate` | Generate artifact (9 types, infographic excluded) |
 | `nlm_download` | Download generated artifact |
 | `nlm_list_sources` | List sources in notebook |
 | `nlm_list_artifacts` | List generated artifacts |
